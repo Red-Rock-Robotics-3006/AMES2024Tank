@@ -1,2 +1,2 @@
 # AMES2024Tank
-Robot Code for 2024 AMES Competition Tank Robot
+Source code of FRC Team 3006 for the 2024 AMES Competition: Soar and Score (Score and Soar?) for the tank drive robot
