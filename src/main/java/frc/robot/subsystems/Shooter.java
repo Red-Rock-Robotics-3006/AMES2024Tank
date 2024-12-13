@@ -15,6 +15,8 @@ public class Shooter extends SubsystemBase{
     private double shooterSpeed = 0.37;
     private double indexSpeed = 0.4;
     private double intakeSpeed = 0.4;
+
+    private static Shooter instance = null;
     
     public Shooter(){
         super("Shooter");
@@ -100,5 +102,10 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Shooter/intakeSpeed", this.intakeSpeed);
    
 
+    }
+
+    public static Shooter getInstance() {
+        if (instance == null) instance = new Shooter();
+        return instance;
     }
 }

@@ -5,12 +5,14 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.Autos;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -25,8 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Shooter m_shooter = new Shooter();
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Shooter m_shooter = Shooter.getInstance();
+  private final Drivetrain m_drivetrain = Drivetrain.getInstance();
+
+  private SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -37,7 +41,7 @@ public class RobotContainer {
   public RobotContainer() throws InterruptedException {
     // Configure the trigger bindings
     configureBindings();
-
+    configureSelector();
     
   }
 
@@ -65,13 +69,22 @@ public class RobotContainer {
       .onTrue(m_shooter.startIntakeCommand())
       .onFalse(m_shooter.stopIntakeCommand());
     
-    m_drivetrain.setDefaultCommand(new InstantCommand(
-      () -> {
-        m_drivetrain.drive(m_driverController.getLeftY(), m_driverController.getRightX());
-      },
-      m_drivetrain)
-    );
+    // m_drivetrain.setDefaultCommand(new InstantCommand(
+    //   () -> {
+    //     m_drivetrain.drive(m_driverController.getLeftY(), m_driverController.getRightX());
+    //   },
+    //   m_drivetrain)
+    // );
     // m_driverController.leftStick().whileTrue(new RunCommand(() -> {m_drivetrain.drive(m_driverController.getLeftY(), m_driverController.getRightX());}, m_drivetrain));
+  }
+
+  public void configureSelector() {
+    m_chooser.setDefaultOption("NO AUTO", Commands.print("womp womp lmao"));
+
+    m_chooser.addOption("leaveauto", Autos.leaveAuto());
+    m_chooser.addOption("leaveandshootauto", Autos.leaveShootAuto());
+
+    SmartDashboard.putData("Auto Chooser", m_chooser);
   }
 
   /**
@@ -82,6 +95,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return Autos.exampleAuto(m_exampleSubsystem);
-    return new InstantCommand(){};
+    return m_chooser.getSelected();
   }
 }
