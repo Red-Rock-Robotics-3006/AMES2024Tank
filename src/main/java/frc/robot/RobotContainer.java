@@ -4,17 +4,13 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.Autos;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -69,13 +65,16 @@ public class RobotContainer {
       .onTrue(m_shooter.startIntakeCommand())
       .onFalse(m_shooter.stopIntakeCommand());
     
-    // m_drivetrain.setDefaultCommand(new InstantCommand(
-    //   () -> {
-    //     m_drivetrain.drive(m_driverController.getLeftY(), m_driverController.getRightX());
-    //   },
-    //   m_drivetrain)
-    // );
     // m_driverController.leftStick().whileTrue(new RunCommand(() -> {m_drivetrain.drive(m_driverController.getLeftY(), m_driverController.getRightX());}, m_drivetrain));
+  }
+
+  public void configureDrive() {
+    m_drivetrain.setDefaultCommand(new InstantCommand(
+      () -> {
+        m_drivetrain.drive(m_driverController.getLeftY(), m_driverController.getRightX());
+      },
+      m_drivetrain)
+    );
   }
 
   public void configureSelector() {

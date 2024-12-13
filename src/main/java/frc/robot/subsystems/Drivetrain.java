@@ -38,8 +38,8 @@ public class Drivetrain extends SubsystemBase{
         this.leftMotorBack.setInverted(true);
         this.leftMotorBack.setIdleMode(CANSparkFlex.IdleMode.kBrake);
 
-        SmartDashboard.putNumber("autoSpeed", -0.4);
-        SmartDashboard.putNumber("autoTime", 3);
+        SmartDashboard.putNumber("autoSpeed", -0.2);
+        SmartDashboard.putNumber("autoTime", 2);
     }
     public void setLeftSpeed(double speed){
         leftMotorBack.set(speed);
@@ -62,15 +62,13 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public void setAutoSpeed() {
-        // this.setLeftSpeed(SmartDashboard.getNumber("autoSpeed", -0.3)); 
-        // this.setRightSpeed(SmartDashboard.getNumber("autoSpeed", 4));
+        this.setLeftSpeed(SmartDashboard.getNumber("autoSpeed", 0)); 
+        this.setRightSpeed(SmartDashboard.getNumber("autoSpeed", 0));
 
-        this.setLeftSpeed(-0.3); 
-        this.setRightSpeed(-0.3);
     }
 
     public void stopAuto() {
-        this.setLeftSpeed(0); 
+        this.setLeftSpeed(0);
         this.setRightSpeed(0);
     }
 
@@ -82,9 +80,6 @@ public class Drivetrain extends SubsystemBase{
     public void periodic(){
         sensitivity = SmartDashboard.getNumber("Drivetrain/sensitivity", sensitivity);
         SmartDashboard.putNumber("Drivetrain/sensitivity", sensitivity);
-
-        SmartDashboard.putNumber("autoSpeed", -0.1);
-        SmartDashboard.putNumber("autoTime", 1);
     }
 
     public static Drivetrain getInstance() {
