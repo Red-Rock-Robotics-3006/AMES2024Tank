@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drivetrain;
@@ -14,18 +12,18 @@ public class Autos {
 
     public static Command leaveAuto() {
         return new SequentialCommandGroup(
-            new InstantCommand(() -> {tank.setAutoSpeed();}),
+            tank.setAutoSpeedCommand(),
             // new StartEndCommand(() -> tank.setAutoSpeed(), () -> tank.stopAuto(), tank).withTimeout(4),
             new WaitCommand(tank.getAutoTime()),
-            new InstantCommand(() -> {tank.stopAuto();})
+            tank.stopAutoCommand()
         );
     }
 
     public static Command leaveShootAuto() {
         return new SequentialCommandGroup(
-            new RunCommand(() -> {tank.setAutoSpeed();}),
+            tank.setAutoSpeedCommand(),
             new WaitCommand(tank.getAutoTime()),
-            new InstantCommand(() -> {tank.stopAuto();}),
+            tank.stopAutoCommand(),
             shooter.startCommand()
         );
     }

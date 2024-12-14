@@ -7,6 +7,8 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase{
@@ -38,7 +40,7 @@ public class Drivetrain extends SubsystemBase{
         this.leftMotorBack.setInverted(true);
         this.leftMotorBack.setIdleMode(CANSparkFlex.IdleMode.kBrake);
 
-        SmartDashboard.putNumber("autoSpeed", -0.2);
+        SmartDashboard.putNumber("autoSpeed", 0.2);
         SmartDashboard.putNumber("autoTime", 2);
     }
     public void setLeftSpeed(double speed){
@@ -64,12 +66,24 @@ public class Drivetrain extends SubsystemBase{
     public void setAutoSpeed() {
         this.setLeftSpeed(SmartDashboard.getNumber("autoSpeed", 0)); 
         this.setRightSpeed(SmartDashboard.getNumber("autoSpeed", 0));
+        System.out.println(SmartDashboard.getNumber("autoSpeed", 0));
 
+        // this.setLeftSpeed(-0.2);
+        // this.setRightSpeed(-0.2);
+    }
+
+    public Command setAutoSpeedCommand() {
+        return new InstantCommand(() -> this.setAutoSpeed(), this);
     }
 
     public void stopAuto() {
         this.setLeftSpeed(0);
         this.setRightSpeed(0);
+    }
+
+    public Command stopAutoCommand() {
+        return new InstantCommand(() -> this.stopAuto(), this);
+
     }
 
     public double getAutoTime() {
