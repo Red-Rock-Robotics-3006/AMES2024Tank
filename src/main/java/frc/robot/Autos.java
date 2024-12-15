@@ -14,7 +14,7 @@ public class Autos {
         return new SequentialCommandGroup(
             tank.setAutoSpeedCommand(),
             // new StartEndCommand(() -> tank.setAutoSpeed(), () -> tank.stopAuto(), tank).withTimeout(4),
-            new WaitCommand(tank.getAutoTime()),
+            new WaitCommand(6),
             tank.stopAutoCommand()
         );
     }
@@ -22,7 +22,7 @@ public class Autos {
     public static Command leaveShootAuto() {
         return new SequentialCommandGroup(
             tank.setAutoSpeedCommand(),
-            new WaitCommand(tank.getAutoTime()),
+            new WaitCommand(6),
             tank.stopAutoCommand(),
             shooter.startCommand()
         );

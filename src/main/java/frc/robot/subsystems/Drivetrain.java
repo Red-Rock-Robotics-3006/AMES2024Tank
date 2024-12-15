@@ -88,6 +88,23 @@ public class Drivetrain extends SubsystemBase{
 
     public double getAutoTime() {
         return SmartDashboard.getNumber("autoTime", 0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     }
 
     @Override
